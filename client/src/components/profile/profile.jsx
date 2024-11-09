@@ -1,48 +1,34 @@
 import React, { useEffect, useState } from "react";
-import apiService from "../../services/AuthApi";
-const initialState = {
-  username: "",
-  email: "",
-  steamId: ""
-};
+import userApiService from "../../services/userApi";
+import { Link } from "react-router-dom";
 
-const Profile = ({ onSendData }) => {
-  const [state, setState] = useState(initialState);
-
-  const username = state.username || "daun";
-  const email = state.email || "debil@email.com";
-  const steamId = state.steamId || 232323;
+const Profile = () => {
+  const [state, setState] = useState([]);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const getProfile = async (accessToken) => {
-      const userInfo = await apiService.profile(accessToken);
-      if (userInfo) {
-        const { username, email, steamId} = userInfo;
-        onSendData(steamId)
-        setState((prevState) => {
-          return {
-            ...prevState,
-            username,
-            email,
-            steamId
-          };
-        });
+    const getProfiles = async () => {
+      const res = await userApiService.getAll();
+      if (res.error) {
+        console.log("something went wrong man");
       } else {
-        console.log("No info found");
+        setState(res);
       }
     };
-    getProfile(accessToken);
+    getProfiles();
   }, []);
 
   return (
     <div className="profile">
-      <h2>My Profile</h2>
-      <div className="profile-info">
-        <h3 className="first">Welcome, Mr. {username}!</h3>
-        <h3 className="other">SteamId: {steamId}</h3>
-        <h3 className="other">Email: {email}</h3>
-      </div>
+      <h2>Users</h2>
+      {state.map((user, i) => (
+        <Link key={i} to="/info">
+          <div className="profile-info">
+            <h3 className="first">{user.username}</h3>
+            <h3 className="other">SteamId: {user.steamId}</h3>
+            <br></br>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 };

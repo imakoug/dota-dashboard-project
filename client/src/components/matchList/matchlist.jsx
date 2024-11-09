@@ -1,9 +1,10 @@
 import Match from "../match";
 import { useState } from "react";
 import dotaApiService from "../../services/dotaApi";
+import {isNil} from 'lodash';
 
 const initialState = {
-  steamId: ""
+  steamId: "",
 };
 
 function MatchList() {
@@ -14,7 +15,7 @@ function MatchList() {
     const { name, value } = e.target;
     setState((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -25,7 +26,7 @@ function MatchList() {
 
     if (res.error) {
       alert(`${res.message}`);
-      setMatches(initialState);
+      setState(initialState);
     } else {
       setMatches(res);
     }
@@ -53,6 +54,15 @@ function MatchList() {
           Find recent matches
         </button>
       </form>
+      {!isNil(matches[0]) && (
+        <tr className="info">
+          <th>Hero</th>
+          <th>Result</th>
+          <th>Type</th>
+          <th>Duration</th>
+          <th>KDA</th>
+        </tr>
+      )}
       <div className="matches-list">
         {matches !== "" &&
           matches.map((match) => (

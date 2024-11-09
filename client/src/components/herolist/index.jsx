@@ -1,6 +1,7 @@
 import { useState } from "react";
 import dotaApiService from "../../services/dotaApi";
 import Hero from "../hero";
+import { isNil } from "lodash";
 
 const initialState = {
   steamId: ""
@@ -25,7 +26,7 @@ function HeroList() {
 
     if (res.error) {
       alert(`${res.message}`);
-      setMatches(initialState);
+      setState(initialState);
     } else {
       setMatches(res);
     }
@@ -53,6 +54,17 @@ function HeroList() {
           Find heroes played
         </button>
       </form>
+      {!isNil(matches[0]) && (
+        <tr className="info">
+          <th>Hero</th>
+          <th></th>
+          <th></th>
+          <th>WR%</th>
+          <th>Total Games</th>
+          <th>Wins</th>
+          <th>Losses</th>
+        </tr>
+      )}
       <div className="matches-list">
         {matches !== "" &&
           matches.slice(0,20).map((hero) => (

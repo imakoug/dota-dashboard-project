@@ -39,14 +39,6 @@ apiService.profile = (accessToken) => {
 
 apiService.logout = (tokenName) => {
   localStorage.removeItem(tokenName);
-  // return fetch(`${BASE_URL}/logout`, {
-  //   method: 'POST',
-  //   credentials: 'include',
-  //   mode: 'cors',
-  //   headers: { 'Content-Type': 'application/json' },
-  // })
-  //   .then((res) => res.json())
-  //   .catch((err) => console.log(err));
 };
 
 export default apiService;

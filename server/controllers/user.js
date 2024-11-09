@@ -1,54 +1,40 @@
-const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'secure key ong';
+
 
 const create = async (req, res) => {
-  const { username, password, birthDate, email, steamId } = req.body;
-  const user = await User.findOne({ username: username });
-  if (user)
-    return res
-      .status(409)
-      .send({ error: '409', message: 'User already exists' });
+  const { steamId } = req.body;
+  const user = await User.findOne({ steamId: steamId});
+  if (user) {
+    return res.status(409).send({e:  "409", message: "already exist bruh"});
+  }
   try {
-    if (password === '') throw new Error();
-    const hash = await bcrypt.hash(password, 10);
-    let newUser = User.create({username: username, password: hash, steamId: steamId, birthDate: birthDate, email: email});
-
-    const accessToken = jwt.sign({ _id: newUser._id, username: newUser.username }, SECRET_KEY);
-    res.status(201).json({message: "Welcome", token: accessToken });
-  } catch (error) {
-    res.status(400).send({ error, message: 'Could not create user' });
+    await User.create({...req.body});
+    res.status(201).send({ message: "User created yo"} );
+  } catch (e) {
+    res.status(400).send({ e, message: 'somethings wronggfgfgf' });
   }
 };
 
-const login = async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username: username });
-    const validatedPass = await bcrypt.compare(password, user.password);
-    if (!validatedPass) throw new Error();
-    const accessToken = jwt.sign({ _id: user._id, username: user.username}, SECRET_KEY);
-    res.status(200).json({message: "Welcome back", token: accessToken });
-  } catch (error) {
-    res
-      .status(401)
-      .send({ error: '401', message: 'Username or password is incorrect' });
-  }
-};
 
 const profile = async (req, res) => {
   try {
-    const { _id, email, username, steamId } = req.user;
-    const user = { _id, email, username, steamId };
+    const { steamId } = req.body;
+    const user = await User.findOne({ steamId: steamId});
     res.status(200).send(user);
-  } catch {
-    res.status(404).send({ error, message: 'User not found' });
+  } catch (e) {
+    res.status(404).send({ e, message: 'User not found' });
   }
 };
 
-const logout = (req, res) => {
-
+const getAll = async (req, res) => {
+  try {
+    const allUsers = await User.find({});
+    res.status(200).send(allUsers);
+  } catch (e) {
+    res.status(400).send({ e, message: 'somethings wronggfgfgf' });
+  }
 };
 
-module.exports = { create, login, profile, logout };
+
+
+module.exports = { create, profile, getAll };
