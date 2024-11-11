@@ -1,8 +1,7 @@
-import dotaApiService from "../../services/dotaApi";
 import { useEffect, useState } from "react";
 import heroimg from "../../heroimg";
 import getRankTier from "../../utils/rankTier";
-// import items from "../../items";
+import getGameMode from "../../utils/gameMode";
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -11,74 +10,22 @@ function formatTime(seconds) {
 }
 
 function Match({ match }) {
-  const [details, setDetails] = useState({});
   const [hero, setHero] = useState("");
   const [img, setImg] = useState("");
-  // const [it, setIt] = useState([]);
-  const matchId = match.match_id;
   let result;
 
   useEffect(() => {
-    const getProfile = async () => {
-      let res = await dotaApiService.getMatch(matchId);
-      if (res.error) {
-      } else {
-        for await (let player of res.players) {
-          if (player.hero_id === match.hero_id) {
-            setDetails(player);
-          }
-        }
-        for await (let hero of heroimg) {
-          if (hero.id === match.hero_id) {
-            setHero(hero.localized_name);
-          }
-          if (hero.id === match.hero_id) setImg(hero.imgpath);
-        }
-        // for (let item of items) {
-        //   if (item.id === details.item_0) {
-        //     setIt((prevState) => [
-        //       ...prevState,
-        //       item.url_image
-        //     ])
-        //   } else if (item.id === details.item_1) {
-        //     setIt((prevState) => [
-        //       ...prevState,
-        //       item.url_image
-        //     ])
-        //   }
-        //   else if (item.id === details.item_2) {
-        //     setIt((prevState) => [
-        //       ...prevState,
-        //       item.url_image
-        //     ])
-        //   }
-        //   else if (item.id === details.item_3) {
-        //     setIt((prevState) => [
-        //       ...prevState,
-        //       item.url_image
-        //     ])
-        //   }
-        //   else if (item.id === details.item_4) {
-        //     setIt((prevState) => [
-        //       ...prevState,
-        //       item.url_image
-        //     ])
-        //   }
-        //   else if (item.id === details.item_5) {
-        //     setIt((prevState) => [
-        //       ...prevState,
-        //       item.url_image
-        //     ])
-        //   }
-        // }
+    for (let hero of heroimg) {
+      if (hero.id === match.hero_id) {
+        setHero(hero.localized_name);
+        setImg(hero.imgpath);
       }
-    };
-    getProfile();
-  }, [matchId, hero]);
+    }
+  }, []);
 
   result =
-    (details.isRadiant && details.radiant_win) ||
-    (!details.isRadiant && !details.radiant_win)
+    (match.player_slot <= 127 && match.radiant_win) ||
+    (match.player_slot <= 255 && match.player_slot >= 128 && !match.radiant_win)
       ? "Won"
       : "Lost";
 
@@ -88,25 +35,25 @@ function Match({ match }) {
         <img src={img} alt={hero} className="hero-image" />
         <div className="hero-info">
           <div className="hero-name">{hero}</div>
-          <div className="hero-rank">{getRankTier(details.rank_tier)}</div>
+          <div className="hero-rank">{getRankTier(match.average_rank)}</div>
         </div>
       </div>
       <div className="winrate"></div>
       <div className={`match-result ${result}`}>{result} Match</div>
       <div className="match-type">
-        {match.game_mode === 22 ? "Ranked" : "Single Draft"}
+        {getGameMode(match.game_mode)}
       </div>
       <div className="winrate"></div>
-      <div className="match-duration">{formatTime(details.duration)}</div>
+      <div className="match-duration">{formatTime(match.duration)}</div>
       <div className="match-kda">
-        {details.kills}/{details.deaths}/{details.assists}
+        {match.kills}/{match.deaths}/{match.assists}
         <div className="kda-bar">
           <div
             className="kda-bar-segment kills"
             style={{
               width: `${
-                (details.kills /
-                  (details.kills + details.deaths + details.assists)) *
+                (match.kills /
+                  (match.kills + match.deaths + match.assists)) *
                 100
               }%`,
             }}
@@ -115,8 +62,8 @@ function Match({ match }) {
             className="kda-bar-segment deaths"
             style={{
               width: `${
-                (details.deaths /
-                  (details.kills + details.deaths + details.assists)) *
+                (match.deaths /
+                  (match.kills + match.deaths + match.assists)) *
                 100
               }%`,
             }}
@@ -125,8 +72,8 @@ function Match({ match }) {
             className="kda-bar-segment assists"
             style={{
               width: `${
-                (details.assists /
-                  (details.kills + details.deaths + details.assists)) *
+                (match.assists /
+                  (match.kills + match.deaths + match.assists)) *
                 100
               }%`,
             }}

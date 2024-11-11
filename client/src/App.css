@@ -1,5 +1,5 @@
 * {
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   color: #e0e0e0;
   box-sizing: border-box;
 }
@@ -99,7 +99,6 @@ input:focus {
   margin-bottom: 1.2rem;
 }
 
-
 .home h2 + h2 {
   margin-top: 1.5rem;
 }
@@ -194,7 +193,6 @@ input[name="steamId"]:focus {
   transform: translateY(1px);
 }
 
-
 .matches-list {
   margin-top: 20px;
   width: 85%;
@@ -286,7 +284,6 @@ input[name="steamId"]:focus {
 .kda-bar-segment.kills {
   background-color: #f50000;
 }
-
 
 .kda-bar-segment.deaths {
   background-color: #a5a5a5;
