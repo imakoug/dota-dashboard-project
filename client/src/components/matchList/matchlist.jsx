@@ -2,6 +2,7 @@ import Match from "../match";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import dotaApiService from "../../services/dotaApi";
+import { Link } from "react-router-dom";
 
 function MatchList() {
   const [matches, setMatches] = useState([]);
@@ -34,7 +35,12 @@ function MatchList() {
       <div className="matches-list">
         {matches.length > 1 &&
           matches.map((match) => (
-            <Match key={match.match_id} match={match}></Match>
+            <Link
+              to="/matches/details"
+              state={{ id: match.match_id, uid: user.steamId }}
+            >
+              <Match key={match.match_id} match={match}></Match>
+            </Link>
           ))}
       </div>
     </section>

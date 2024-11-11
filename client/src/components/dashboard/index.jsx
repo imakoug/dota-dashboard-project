@@ -5,18 +5,18 @@ import MatchList from "../matchList/matchlist";
 import HeroList from "../herolist";
 import Register from "../registerForm";
 import Profile from "../profile/profile";
+import MatchDetails from "../matchDetails";
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/recentMatches" element={<MatchList></MatchList>}></Route>
-        <Route path="/heroes" element={<HeroList></HeroList>}></Route> */}
         <Route path="/profile" element={<Profile></Profile>}></Route>
-        <Route path="/infomatches" element={<MatchList></MatchList>}></Route>
-        <Route path="/infoheroes" element={<HeroList></HeroList>}></Route>
+        <Route path="/matches" element={<MatchList></MatchList>}></Route>
+        <Route path="/heroes" element={<HeroList></HeroList>}></Route>
         <Route path="/createUser" element={<Register></Register>}></Route>
+        <Route path="/matches/details" element={<MatchDetails></MatchDetails>}></Route>
       </Routes>
     </div>
   );

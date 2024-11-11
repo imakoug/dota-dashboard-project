@@ -34,11 +34,10 @@ const ranks = {
   73: "Divine 3",
   74: "Divine 4",
   75: "Divine 5",
-  80: "Immortal",
 };
 
 function getRankTier(rank) {
-  if (rank > 80) return "Immortal";
+  if (rank > 75) return "Immortal";
 
   for (let ranker in ranks) {
     if (ranker == rank) return ranks[ranker];

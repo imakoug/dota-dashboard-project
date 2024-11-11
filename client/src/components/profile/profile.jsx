@@ -47,10 +47,10 @@ const Profile = () => {
         <div key={i} className="profile-info">
           <h3>{user.username}</h3>
           <h3>SteamId: {user.steamId}</h3>
-          <Link to="/infoheroes" state={{ user }}>
+          <Link to="/heroes" state={{ user }}>
             Get Heroes
           </Link>
-          <Link to="/infomatches" state={{ user }}>
+          <Link to="/matches" state={{ user }}>
             Get Matches
           </Link>
           <Link onClick={() => handleClick(user.steamId)}>Delete User</Link>
