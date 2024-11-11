@@ -21,10 +21,15 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await userApiService.create(state);
-    alert(`${res.message}`);
-    setState(initialState);
-    navigate("/profile");
+    const parsedToInt  = parseInt(state.steamId, 10);
+    if (!parsedToInt) {
+      alert("steamId should be a number")
+    } else {
+      const res = await userApiService.create(state);
+      alert(`${res.message}`);
+      setState(initialState);
+      navigate("/profile");
+    }
   };
 
   const validateForm = () => {

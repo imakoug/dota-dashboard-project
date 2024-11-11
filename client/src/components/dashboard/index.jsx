@@ -14,7 +14,8 @@ const Dashboard = () => {
         {/* <Route path="/recentMatches" element={<MatchList></MatchList>}></Route>
         <Route path="/heroes" element={<HeroList></HeroList>}></Route> */}
         <Route path="/profile" element={<Profile></Profile>}></Route>
-        <Route path="/info"></Route>
+        <Route path="/infomatches" element={<MatchList></MatchList>}></Route>
+        <Route path="/infoheroes" element={<HeroList></HeroList>}></Route>
         <Route path="/createUser" element={<Register></Register>}></Route>
       </Routes>
     </div>

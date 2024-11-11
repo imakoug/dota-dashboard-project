@@ -1,4 +1,3 @@
-import heroes from "../../heroes";
 import heroimg from "../../heroimg";
 import { useState, useEffect } from "react";
 
@@ -8,13 +7,11 @@ function Hero({ hero }) {
   const heroId = hero.hero_id;
 
   useEffect(() => {
-    for (let heroe of heroes) {
+    for (let heroe of heroimg) {
       if (heroe.id === hero.hero_id) {
         setName(heroe.localized_name);
       }
-      for (let heroe of heroimg) {
-        if (heroe.id === hero.hero_id) setImg(heroe.imgpath);
-      }
+      if (heroe.id === hero.hero_id) setImg(heroe.imgpath);
     }
   }, [heroId]);
 

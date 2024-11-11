@@ -1,60 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dotaApiService from "../../services/dotaApi";
 import Hero from "../hero";
-import { isNil } from "lodash";
-
-const initialState = {
-  steamId: ""
-};
+import { useLocation } from "react-router-dom";
 
 function HeroList() {
-  const [state, setState] = useState(initialState);
-  const [matches, setMatches] = useState([]);
+  const [heroes, setHeroes] = useState([]);
+  const location = useLocation();
+  const user = location.state?.user;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setState((prevState) => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { steamId } = state;
-    const res = await dotaApiService.getHeroesPlayed(steamId);
-
-    if (res.error) {
-      alert(`${res.message}`);
-      setState(initialState);
-    } else {
-      setMatches(res);
-    }
-  };
-
-  const validateForm = () => {
-    return !state.steamId;
-  };
+  useEffect(() => {
+    const steamId = user.steamId;
+    const getHeroes = async (steamId) => {
+      const res = await dotaApiService.getHeroesPlayed(steamId);
+      setHeroes(res);
+    };
+    getHeroes(steamId);
+  }, []);
 
   return (
     <section className="match-list-section">
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className="form-label">Your Steam ID</label>
-          <input
-            type="text"
-            name="steamId"
-            value={state.steamId}
-            onChange={handleChange}
-            className="form-input"
-            placeholder="Enter Steam ID"
-          />
-        </div>
-        <button className="form-submit" type="submit" disabled={validateForm()}>
-          Find heroes played
-        </button>
-      </form>
-      {!isNil(matches[0]) && (
+      {heroes.length > 1 && heroes[0].games < 1 && (
+        <h1>Your Steam ID is not valid or your profile is hidden</h1>
+      )}
+      {heroes.length > 1 && heroes[0].games > 0 && (
         <tr className="info">
           <th>Hero</th>
           <th></th>
@@ -66,14 +34,13 @@ function HeroList() {
         </tr>
       )}
       <div className="matches-list">
-        {matches !== "" &&
-          matches.slice(0,20).map((hero) => (
-            <Hero key={hero.hero_id} hero={hero}></Hero>
-          ))}
+        {heroes.length > 1 && heroes[0].games > 0 &&
+          heroes
+            .slice(0, 20)
+            .map((hero) => <Hero key={hero.hero_id} hero={hero}></Hero>)}
       </div>
     </section>
   );
 }
-
 
 export default HeroList;

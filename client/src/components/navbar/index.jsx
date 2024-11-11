@@ -8,12 +8,6 @@ const Navbar = () => {
         <li>
           <Link to="/">&nbsp;Home</Link>
         </li>
-        {/* <li>
-          <Link to="/recentMatches">Recent matches</Link>
-        </li>
-        <li>
-          <Link to="/heroes">Most played heroes</Link>
-        </li> */}
         <li>
           <Link to="/profile">Users</Link>
         </li>

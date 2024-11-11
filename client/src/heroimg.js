@@ -623,6 +623,11 @@ const heroimg = [
       "id": 138,
       "localized_name": "Muerta",
       "imgpath": "https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/muerta.png"
+  },
+  {
+    "id": 145,
+    "localized_name": "Kez",
+    "imgpath": "https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/kez.png"
   }
 ]
 

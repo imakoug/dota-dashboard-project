@@ -17,17 +17,45 @@ const Profile = () => {
     getProfiles();
   }, []);
 
+  const handleClick = async (steamId) => {
+    const req = { steamId: steamId };
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+    if (!confirmDelete) return;
+    try {
+      const res = await userApiService.deleteOne(req);
+      if (res.error) {
+        alert(`${res.message}`);
+      } else {
+        setState((prevState) =>
+          prevState.filter((user) => user.steamId !== steamId)
+        );
+        alert(`${res.message}`);
+      }
+    } catch (e) {
+      console.log(e);
+      alert("An error occurred");
+    }
+  };
+
   return (
     <div className="profile">
       <h2>Users</h2>
+      {state.length === 0 && <h1>There are no users</h1>}
       {state.map((user, i) => (
-        <Link key={i} to="/info">
-          <div className="profile-info">
-            <h3 className="first">{user.username}</h3>
-            <h3 className="other">SteamId: {user.steamId}</h3>
-            <br></br>
-          </div>
-        </Link>
+        <div key={i} className="profile-info">
+          <h3>{user.username}</h3>
+          <h3>SteamId: {user.steamId}</h3>
+          <Link to="/infoheroes" state={{ user }}>
+            Get Heroes
+          </Link>
+          <Link to="/infomatches" state={{ user }}>
+            Get Matches
+          </Link>
+          <Link onClick={() => handleClick(user.steamId)}>Delete User</Link>
+          <br></br>
+        </div>
       ))}
     </div>
   );
