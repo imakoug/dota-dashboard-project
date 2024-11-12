@@ -35,9 +35,9 @@ function MatchList() {
       <div className="matches-list">
         {matches.length > 1 &&
           matches.map((match) => (
-            <Link
+            <Link style={{ textDecoration: 'none' }}
               to="/matches/details"
-              state={{ id: match.match_id, uid: user.steamId }}
+              state={{ id: match.match_id }}
             >
               <Match key={match.match_id} match={match}></Match>
             </Link>

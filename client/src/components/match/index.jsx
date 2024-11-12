@@ -40,9 +40,7 @@ function Match({ match }) {
       </div>
       <div className="winrate"></div>
       <div className={`match-result ${result}`}>{result} Match</div>
-      <div className="match-type">
-        {getGameMode(match.game_mode)}
-      </div>
+      <div className="match-type">{getGameMode(match.game_mode)}</div>
       <div className="winrate"></div>
       <div className="match-duration">{formatTime(match.duration)}</div>
       <div className="match-kda">
@@ -52,8 +50,7 @@ function Match({ match }) {
             className="kda-bar-segment kills"
             style={{
               width: `${
-                (match.kills /
-                  (match.kills + match.deaths + match.assists)) *
+                (match.kills / (match.kills + match.deaths + match.assists)) *
                 100
               }%`,
             }}
@@ -62,8 +59,7 @@ function Match({ match }) {
             className="kda-bar-segment deaths"
             style={{
               width: `${
-                (match.deaths /
-                  (match.kills + match.deaths + match.assists)) *
+                (match.deaths / (match.kills + match.deaths + match.assists)) *
                 100
               }%`,
             }}
@@ -72,8 +68,7 @@ function Match({ match }) {
             className="kda-bar-segment assists"
             style={{
               width: `${
-                (match.assists /
-                  (match.kills + match.deaths + match.assists)) *
+                (match.assists / (match.kills + match.deaths + match.assists)) *
                 100
               }%`,
             }}

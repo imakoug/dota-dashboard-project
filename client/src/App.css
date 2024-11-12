@@ -3,6 +3,9 @@
   color: #e0e0e0;
   box-sizing: border-box;
 }
+::-webkit-scrollbar {
+    display: none;
+}
 
 body {
   background-color: #121212;
@@ -211,6 +214,7 @@ input[name="steamId"]:focus {
   display: flex;
   align-items: center;
   width: 20%;
+  margin-left: 20px;
 }
 
 .hero-image {
@@ -416,4 +420,8 @@ input[name="steamId"]:focus {
 .profile-info a:active {
   background-color: #666;
   transform: translateY(1px);
+}
+
+.nounder {
+  text-decoration: 'none'
 }

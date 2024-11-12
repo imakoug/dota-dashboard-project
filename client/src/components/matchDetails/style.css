@@ -1,0 +1,81 @@
+/* General styling */
+body {
+  font-family: Arial, sans-serif;
+  color: #f0f0f0;
+  background-color: #1b1b1b;
+  padding: 20px;
+  margin: 0;
+}
+
+h1 {
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 40px;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+thead th {
+  background-color: #333;
+  color: #f0f0f0;
+  padding: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #4f66506a;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #4746467f;
+}
+
+tbody tr:hover {
+  background-color: #505050;
+}
+
+td {
+  color: #e0e0e0;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #444;
+}
+
+h1#radiant, h1#dire {
+  margin-top: 40px;
+  font-size: 1.8rem;
+}
+.rad {
+  color: green;
+}
+.dir{
+  color:rgb(225, 51, 51);
+}
+.net {
+  color: gold;
+  font-weight: bold;
+}
+.kil {
+  color: aliceblue;
+  font-weight: bold;
+}
+.asis {
+  color:aliceblue;
+  font-weight: bold;
+}
+
+#radiant {
+  color: #2bce30;
+}
+
+#dire {
+  color: #e74c3c;
+}
+
+
