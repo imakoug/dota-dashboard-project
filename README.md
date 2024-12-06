@@ -1,10 +1,10 @@
-<img title="" src="file:///C:/Users/Pavlik/dota-dasboard/imgs/dd.png" alt="" width="342" data-align="center">
+<img title="" src="imgs/dd.png" alt="" width="342" data-align="center">
 
 Dota Dashboard is a web app. You can add multiple accounts, analyze games, giving you detailed information about your recent matches and most played heroes.
 
 ## Screenshots
 
-<img src="file:///C:/Users/Pavlik/dota-dasboard/imgs/ss.png" title="" alt="" data-align="center">
+<img src="imgs/ss.png" title="" alt="" data-align="center">
 
 ## Getting started
 
