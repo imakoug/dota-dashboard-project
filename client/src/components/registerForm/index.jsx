@@ -38,7 +38,7 @@ const Register = () => {
 
   return (
     <section>
-      <h2>Creater a user</h2>
+      <h2>Create a user</h2>
       <form className="form" onSubmit={handleSubmit}>
         <div className="layout">
           <label>Username</label>

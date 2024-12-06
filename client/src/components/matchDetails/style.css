@@ -17,7 +17,6 @@ table {
   width: 100%;
   margin-bottom: 40px;
   border-collapse: collapse;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 thead th {
@@ -75,7 +74,7 @@ h1#radiant, h1#dire {
 }
 
 #dire {
-  color: #e74c3c;
+  color: #ed1b04;
 }
 
 

@@ -6,9 +6,9 @@ import "./style.css";
 
 const MatchDetails = () => {
   const [details, setDetails] = useState([]);
-  const location = useLocation();
   const [score, setScore] = useState([]);
   const [res, setRes] = useState(false);
+  const location = useLocation();
   const id = location.state?.id;
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const MatchDetails = () => {
   }, [id]);
 
   const clasers = res ? "rad" : "dir";
+
   return (
     <div>
       <h1 className="score">
@@ -51,8 +52,8 @@ const MatchDetails = () => {
             </tr>
           </thead>
           <tbody>
-            {details.slice(0, 5).map((player) => (
-              <MatchDetailsItem key={player.account_id} player={player} />
+            {details.slice(0, 5).map((player, i) => (
+              <MatchDetailsItem key={i} player={player} />
             ))}
           </tbody>
         </table>
@@ -79,8 +80,8 @@ const MatchDetails = () => {
             </tr>
           </thead>
           <tbody>
-            {details.slice(5, 10).map((player) => (
-              <MatchDetailsItem key={player.account_id} player={player} />
+            {details.slice(5, 10).map((player, i) => (
+              <MatchDetailsItem key={i} player={player} />
             ))}
           </tbody>
         </table>

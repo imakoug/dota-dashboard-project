@@ -24,6 +24,7 @@ function MatchList() {
         <h1>Your Steam ID is not valid or your profile is hidden</h1>
       )}
       {matches.length > 1 && (
+        // make it with <table>
         <tr className="info">
           <th>Hero</th>
           <th>Result</th>
@@ -34,12 +35,14 @@ function MatchList() {
       )}
       <div className="matches-list">
         {matches.length > 1 &&
-          matches.map((match) => (
-            <Link style={{ textDecoration: 'none' }}
+          matches.map((match, i) => (
+            <Link
+              key={i}
+              style={{ textDecoration: "none" }}
               to="/matches/details"
               state={{ id: match.match_id }}
             >
-              <Match key={match.match_id} match={match}></Match>
+              <Match match={match}></Match>
             </Link>
           ))}
       </div>

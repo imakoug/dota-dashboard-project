@@ -57,7 +57,7 @@ const heroimg = [
   {
       "id": 12,
       "localized_name": "Phantom Lancer",
-      "imgpath": "https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/phantomlancer.png"
+      "imgpath": "https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_lancer.png"
   },
   {
       "id": 13,

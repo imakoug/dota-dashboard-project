@@ -44,7 +44,7 @@ const MatchDetailsItem = ({ player }) => {
       <td>{player.hero_healing}</td>
       <td>{player.tower_damage}</td>
       <td>
-        <div>{its.length > 1 && its.map((it) => <img src={it.img}></img>)}</div>
+        <div>{its.length > 1 && its.map((it, i) => <img key={i} src={it.img}></img>)}</div>
       </td>
     </tr>
   );
