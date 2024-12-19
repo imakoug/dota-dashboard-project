@@ -15,53 +15,39 @@ const Hero = ({ hero }: IHeroProps) => {
     for (let heroe of heroimg) {
       if (heroe.id === hero.hero_id) {
         setName(heroe.localized_name);
+        setImg(heroe.imgpath);
       }
-      if (heroe.id === hero.hero_id) setImg(heroe.imgpath);
     }
   }, [heroId]);
 
   return (
-    <div className="match-row">
-      <div className="match-hero">
-        <img src={img} alt={name} className="hero-image" />
-        <div className="hero-info">
-          <div className="hero-name">{name}</div>
+    <tr className="border-b border-gray-700 hover:bg-gray-700 transition duration-300">
+      <td className="p-2 flex items-center space-x-2">
+        <img
+          src={img}
+          alt={name}
+          className="rounded-lg object-cover"
+        />
+        <span className="text-gray-200 font-medium text-base">{name}</span>
+      </td>
+      <td className="p-2 text-center">
+        <div className="w-40 bg-red-600 rounded-full h-5 overflow-hidden mx-auto">
+          <div
+            className="bg-green-500 h-full"
+            style={{
+              width: `${(hero.win / hero.games) * 100}%`,
+            }}
+          ></div>
         </div>
-      </div>
-      <div className="wr-bar">
-        <div
-          className="wr-bar-segment wins"
-          style={{
-            width: `${(hero.win / hero.games) * 100}%`,
-          }}
-        ></div>
-        <div
-          className="wr-bar-segment loses"
-          style={{
-            width: `${((hero.games - hero.win) / hero.games) * 100}%`,
-          }}
-        ></div>
-      </div>
-      <div className="winrate">
-        <div className="hero-name">
-          {((hero.win / hero.games) * 100).toFixed(2)} %
-        </div>
-      </div>
-      <div className="winrate"></div>
-      <div className="winrate">
-        <div className="hero-name">{hero.games}</div>
-      </div>
-
-      <div className="winrate"></div>
-      <div className="winrate">
-        <div className="hero-name">{hero.win}</div>
-      </div>
-      <div className="winrate"></div>
-      <div className="winrate">
-        <div className="hero-name">{hero.games - hero.win}</div>
-      </div>
-    </div>
+        <span className="text-sm text-gray-400 mt-1 block">
+          {((hero.win / hero.games) * 100).toFixed(2)}%
+        </span>
+      </td>
+      <td className="p-2 text-center text-sm">{hero.games}</td>
+      <td className="p-2 text-center text-sm">{hero.win}</td>
+      <td className="p-2 text-center text-sm">{hero.games - hero.win}</td>
+    </tr>
   );
-}
+};
 
 export default Hero;

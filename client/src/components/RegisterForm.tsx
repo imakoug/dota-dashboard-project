@@ -29,12 +29,17 @@ const Register = () => {
       alert("SteamId should include only numbers");
     } else {
       const res = await userApiService.create!(user);
-      alert(`${res.message}`);
-      setUser({
-        username: "",
-        steamId: "",
-      });
-      navigate("/profile");
+      if (res.message === "User created!") {
+        alert(`${res.message}`);
+        setUser({
+          username: "",
+          steamId: "",
+        });
+        navigate("/profile");
+      } else {
+        alert(`${res.message}`);
+        return;
+      }
     }
   };
 
@@ -43,31 +48,53 @@ const Register = () => {
   };
 
   return (
-    <section>
-      <h2>Create a user</h2>
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="layout">
-          <label>Username</label>
-        </div>
-        <input
-          type="text"
-          name="username"
-          value={user.username}
-          onChange={handleChange}
-        />
-        <div className="layout">
-          <label>SteamId</label>
-        </div>
-        <input
-          type="steamId"
-          name="steamId"
-          value={user.steamId}
-          onChange={handleChange}
-        />
-        <button className="form-submit" type="submit" disabled={validateForm()}>
-          &nbsp;Add user&nbsp;
-        </button>
-      </form>
+    <section className="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center">
+      <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">
+          Create a User
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="username" className="block text-gray-300 mb-2">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={user.username}
+              onChange={handleChange}
+              className="w-full bg-gray-700 text-gray-100 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter username"
+            />
+          </div>
+          <div>
+            <label htmlFor="steamId" className="block text-gray-300 mb-2">
+              SteamId
+            </label>
+            <input
+              type="text"
+              id="steamId"
+              name="steamId"
+              value={user.steamId}
+              onChange={handleChange}
+              className="w-full bg-gray-700 text-gray-100 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Steam ID"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={validateForm()}
+            className={`w-full p-2 rounded text-white font-bold ${
+              validateForm()
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-500 transition duration-300"
+            }`}
+          >
+            Add User
+          </button>
+        </form>
+      </div>
     </section>
   );
 };

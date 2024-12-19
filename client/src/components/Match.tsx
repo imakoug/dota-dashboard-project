@@ -3,6 +3,7 @@ import heroimg from "../utils/heroimg";
 import getRankTier from "../utils/rankTier";
 import getGameMode from "../utils/gameMode";
 import { IMatch } from "../types";
+import { useNavigate } from "react-router-dom";
 
 function formatTime(seconds: number) {
   const minutes = Math.floor(seconds / 60);
@@ -18,6 +19,7 @@ const Match = ({ match }: IMatchProps) => {
   const [hero, setHero] = useState("");
   const [img, setImg] = useState("");
   let result;
+  const navigate = useNavigate();
 
   useEffect(() => {
     for (let hero of heroimg) {
@@ -35,53 +37,70 @@ const Match = ({ match }: IMatchProps) => {
       : "Lost";
 
   return (
-    <div className="match-row">
-      <div className="match-hero">
-        <img src={img} alt={hero} className="hero-image" />
-        <div className="hero-info">
-          <div className="hero-name">{hero}</div>
-          <div className="hero-rank">{getRankTier(match.average_rank)}</div>
+    <tr
+      className=" hover:bg-gray-700 cursor-pointer"
+      onClick={() =>
+        navigate(`/matches/details`, { state: { id: match.match_id } })
+      }
+    >
+      <td className="py-3 px-6 flex items-center">
+        <img src={img} alt={hero} className="w-30 h-20 mr-4" />
+        <div>
+          <div className="font-medium">{hero}</div>
+          <div className="text-xs text-gray-500">
+            {getRankTier(match.average_rank)}
+          </div>
         </div>
-      </div>
-      <div className="winrate"></div>
-      <div className={`match-result ${result}`}>{result} Match</div>
-      <div className="match-type">{getGameMode(match.game_mode)}</div>
-      <div className="winrate"></div>
-      <div className="match-duration">{formatTime(match.duration)}</div>
-      <div className="match-kda">
-        {match.kills}/{match.deaths}/{match.assists}
-        <div className="kda-bar">
-          <div
-            className="kda-bar-segment kills"
-            style={{
-              width: `${
-                (match.kills / (match.kills + match.deaths + match.assists)) *
-                100
-              }%`,
-            }}
-          ></div>
-          <div
-            className="kda-bar-segment deaths"
-            style={{
-              width: `${
-                (match.deaths / (match.kills + match.deaths + match.assists)) *
-                100
-              }%`,
-            }}
-          ></div>
-          <div
-            className="kda-bar-segment assists"
-            style={{
-              width: `${
-                (match.assists / (match.kills + match.deaths + match.assists)) *
-                100
-              }%`,
-            }}
-          ></div>
+      </td>
+      <td
+        className={`py-3 px-6 ${
+          result === "Won" ? "text-green-600" : "text-red-600"
+        }`}
+      >
+        {result} Match
+      </td>
+      <td className="py-3 px-6">{getGameMode(match.game_mode)}</td>
+      <td className="py-3 px-6">{formatTime(match.duration)}</td>
+      <td className="py-3 px-6">
+        <div>
+          <span className="font-semibold">
+            {match.kills}/{match.deaths}/{match.assists}
+          </span>
+          <div className="flex items-center gap-1 mt-1">
+            <div
+              className="h-2 bg-green-400"
+              style={{
+                width: `${
+                  (match.kills / (match.kills + match.deaths + match.assists)) *
+                  100
+                }%`,
+              }}
+            ></div>
+            <div
+              className="h-2 bg-gray-400"
+              style={{
+                width: `${
+                  (match.deaths /
+                    (match.kills + match.deaths + match.assists)) *
+                  100
+                }%`,
+              }}
+            ></div>
+            <div
+              className="h-2 bg-red-400"
+              style={{
+                width: `${
+                  (match.assists /
+                    (match.kills + match.deaths + match.assists)) *
+                  100
+                }%`,
+              }}
+            ></div>
+          </div>
         </div>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
-}
+};
 
 export default Match;

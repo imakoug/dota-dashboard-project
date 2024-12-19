@@ -20,32 +20,43 @@ const MatchDetailsItem = ({ player }: any) => {
       }
     }
     setIts(itemNames);
-    console.log(its)
-  }, []);
+  }, [player]);
 
   return (
-    <tr>
-      <td>
-        <div>
-          <img src={img}></img>
+    <tr className="hover:bg-gray-700">
+      <td className="py-2 px-3 text-center">
+        <div className="w-10 h-10 mx-auto">
+          <img className="rounded-md" src={img} alt="Hero" />
         </div>
       </td>
-      <td>
-        <h2>{player.personaname ? player.personaname : "no username"}</h2>
+      <td className="py-2 px-3 text-left">
+        <h2 className="truncate text-sm font-medium">
+          {player.personaname ? player.personaname : "No username"}
+        </h2>
       </td>
-      <td className="kil">{player.kills}</td>
-      <td>{player.deaths}</td>
-      <td className="asis">{player.assists}</td>
-      <td className="net">{player.net_worth}</td>
-      <td>{player.last_hits}</td>
-      <td>{player.denies}</td>
-      <td>{player.gold_per_min}</td>
-      <td>{player.xp_per_min}</td>
-      <td>{player.hero_damage}</td>
-      <td>{player.hero_healing}</td>
-      <td>{player.tower_damage}</td>
-      <td>
-        <div>{its.length > 1 && its.map((it: any, i: number) => <img key={i} src={it.img}></img>)}</div>
+      <td className="py-2 px-3 text-center">{player.kills}</td>
+      <td className="py-2 px-3 text-center">{player.deaths}</td>
+      <td className="py-2 px-3 text-center">{player.assists}</td>
+      <td className="py-2 px-3 text-center">{player.net_worth}</td>
+      <td className="py-2 px-3 text-center">{player.last_hits}</td>
+      <td className="py-2 px-3 text-center">{player.denies}</td>
+      <td className="py-2 px-3 text-center">{player.gold_per_min}</td>
+      <td className="py-2 px-3 text-center">{player.xp_per_min}</td>
+      <td className="py-2 px-3 text-center">{player.hero_damage}</td>
+      <td className="py-2 px-3 text-center">{player.hero_healing}</td>
+      <td className="py-2 px-3 text-center">{player.tower_damage}</td>
+      <td className="py-2 px-3">
+        <div className="flex justify-center items-center space-x-1">
+          {its.length > 1 &&
+            its.map((it: any, i: number) => (
+              <img
+                key={i}
+                className="w-8 h-8 rounded-sm"
+                src={it.img}
+                alt="Item"
+              />
+            ))}
+        </div>
       </td>
     </tr>
   );

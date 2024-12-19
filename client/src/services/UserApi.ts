@@ -55,7 +55,7 @@ userApiService.deleteOne = (steamId: string) => {
     credentials: "include",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(steamId),
+    body: JSON.stringify({steamId}),
   })
     .then((res) => res.json())
     .catch((err) => console.log(err));

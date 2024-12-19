@@ -9,8 +9,8 @@ const Profile = () => {
   useEffect(() => {
     const getProfiles = async () => {
       const res = await userApiService.getAll!();
-      if (res.error) {
-        console.log("something went wrong man");
+      if (res.e) {
+        console.log(res.e);
       } else {
         setProfiles(res);
       }
@@ -31,7 +31,6 @@ const Profile = () => {
         setProfiles((prevState: IProfile[]) =>
           prevState.filter((user: IProfile) => user.steamId !== steamId)
         );
-        alert(`${res.message}`);
       }
     } catch (e) {
       console.log(e);
@@ -40,23 +39,46 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile">
-      <h2>Users</h2>
-      {profiles.length === 0 && <h1>There are no users</h1>}
-      {profiles.map((user: IProfile, i: number) => (
-        <div key={i} className="profile-info">
-          <h3>{user.username}</h3>
-          <h3>SteamId: {user.steamId}</h3>
-          <Link to="/heroes" state={{ user }}>
-            Get Heroes
-          </Link>
-          <Link to="/matches" state={{ user }}>
-            Get Matches
-          </Link>
-          <a onClick={() => handleClick(user.steamId)}>Delete User</a>
-          <br></br>
-        </div>
-      ))}
+    <div className="bg-gray-900 text-gray-100 min-h-screen py-10 px-6">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold text-white mb-6 text-center">Users</h2>
+        {profiles.length === 0 && (
+          <h1 className="text-lg text-gray-300">There are no users</h1>
+        )}
+        {profiles.map((user: IProfile, i: number) => (
+          <div
+            key={i}
+            className="bg-gray-800 p-6 rounded-lg shadow-md mb-4 text-center"
+          >
+            <h3 className="text-xl font-semibold text-white mb-2">
+              {user.username}
+            </h3>
+            <h3 className="text-gray-400 mb-4">SteamId: {user.steamId}</h3>
+            <div className="flex justify-center space-x-4 mb-4">
+              <Link
+                to="/heroes"
+                state={{ user }}
+                className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500 transition duration-300"
+              >
+                Get Heroes
+              </Link>
+              <Link
+                to="/matches"
+                state={{ user }}
+                className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500 transition duration-300"
+              >
+                Get Matches
+              </Link>
+            </div>
+            <button
+              onClick={() => handleClick(user.steamId)}
+              className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-500 transition duration-300"
+            >
+              Delete User
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

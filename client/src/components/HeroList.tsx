@@ -3,6 +3,7 @@ import dotaApiService from "../services/DotaApi";
 import Hero from "./Hero";
 import { useLocation } from "react-router-dom";
 import { IHero } from "../types";
+import BackButton from "./Backbutton";
 
 function HeroList() {
   const [heroes, setHeroes] = useState<IHero[]>([]);
@@ -14,33 +15,40 @@ function HeroList() {
     const getHeroes = async (steamId: string) => {
       const res = await dotaApiService.getHeroesPlayed!(steamId);
       setHeroes(res);
-      console.log(heroes)
     };
     getHeroes(steamId);
   }, []);
 
+  if (heroes.length < 1) {
+    return (
+      <section className="bg-gray-900 text-gray-100 min-h-screen p-8">
+        <h1 className="text-center text-gray-300 mt-10">Loading...</h1>
+      </section>
+    );
+  }
+
   return (
-    <section className="match-list-section">
-      {heroes.length > 1 && heroes[0].games < 1 && (
-        <h1>Your Steam ID is not valid or your profile is hidden</h1>
-      )}
-      {heroes.length > 1 && heroes[0].games > 0 && (
-        <tr className="info">
-          <th>Hero</th>
-          <th></th>
-          <th></th>
-          <th>WR%</th>
-          <th>Total Games</th>
-          <th>Wins</th>
-          <th>Losses</th>
-        </tr>
-      )}
-      <div className="matches-list">
-        {heroes.length > 1 && heroes[0].games > 0 &&
-          heroes
-            .slice(0, 20)
-            .map((hero: any) => <Hero key={hero.hero_id} hero={hero}></Hero>)}
-      </div>
+    <section className="bg-gray-900 text-gray-100 min-h-screen p-8">
+      <BackButton></BackButton>
+      <h2 className="text-3xl font-bold text-gray-400 mb-6 text-center">
+        Hero Statistics
+      </h2>
+      <table className="w-full border-collapse bg-gray-800 rounded-lg overflow-hidden shadow-md">
+        <thead>
+          <tr className="bg-gray-700 text-gray-300">
+            <th className="p-4">Hero</th>
+            <th className="p-4">WR%</th>
+            <th className="p-4">Total Games</th>
+            <th className="p-4">Wins</th>
+            <th className="p-4">Losses</th>
+          </tr>
+        </thead>
+        <tbody>
+          {heroes.slice(0, 20).map((hero: IHero) => (
+            <Hero key={hero.hero_id} hero={hero}></Hero>
+          ))}
+        </tbody>
+      </table>
     </section>
   );
 }
