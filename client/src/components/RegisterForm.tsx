@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import userApiService from "../services/UserApi";
 import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
 interface IUser {
   username: string;
   steamId: string;
@@ -26,11 +26,11 @@ const Register = () => {
     e.preventDefault();
     var numberRegex = /^\d+$/;
     if (!numberRegex.test(user.steamId)) {
-      alert("SteamId should include only numbers");
+      alert("SteamId should only include numbers");
     } else {
       const res = await userApiService.create!(user);
       if (res.message === "User created!") {
-        alert(`${res.message}`);
+        toast.success(`${res.message}`);
         setUser({
           username: "",
           steamId: "",

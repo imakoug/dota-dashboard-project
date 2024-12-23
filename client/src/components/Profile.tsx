@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import userApiService from "../services/UserApi";
 import { Link } from "react-router-dom";
 import { IProfile } from "../types";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   const [profiles, setProfiles] = useState<IProfile[]>([]);
@@ -31,6 +32,7 @@ const Profile = () => {
         setProfiles((prevState: IProfile[]) =>
           prevState.filter((user: IProfile) => user.steamId !== steamId)
         );
+        toast.success("User succesfully deleted!");
       }
     } catch (e) {
       console.log(e);
@@ -40,8 +42,13 @@ const Profile = () => {
 
   return (
     <div className="bg-gray-900 text-gray-100 min-h-screen py-10 px-6">
+      <div>
+        {/* <Toaster position="bottom-right" reverseOrder={false} /> */}
+      </div>
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-white mb-6 text-center">Users</h2>
+        <h2 className="text-3xl font-bold text-white mb-6 text-center">
+          Users
+        </h2>
         {profiles.length === 0 && (
           <h1 className="text-lg text-gray-300">There are no users</h1>
         )}

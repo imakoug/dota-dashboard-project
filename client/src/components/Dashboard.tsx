@@ -6,17 +6,24 @@ import HeroList from "./HeroList";
 import Register from "./RegisterForm";
 import Profile from "./Profile";
 import MatchDetails from "./MatchDetails";
+import { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
+      <div>
+        <Toaster position="bottom-right" reverseOrder={false}></Toaster>
+      </div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile></Profile>}></Route>
         <Route path="/matches" element={<MatchList></MatchList>}></Route>
         <Route path="/heroes" element={<HeroList></HeroList>}></Route>
         <Route path="/createUser" element={<Register></Register>}></Route>
-        <Route path="/matches/details" element={<MatchDetails></MatchDetails>}></Route>
+        <Route
+          path="/matches/details"
+          element={<MatchDetails></MatchDetails>}
+        ></Route>
       </Routes>
     </div>
   );
