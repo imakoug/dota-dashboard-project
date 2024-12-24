@@ -38,13 +38,13 @@ const Match = ({ match }: IMatchProps) => {
 
   return (
     <tr
-      className=" hover:bg-gray-700 cursor-pointer"
+      className="border-b border-gray-700 hover:bg-gray-700 transition duration-300 cursor-pointer"
       onClick={() =>
         navigate(`/matches/details`, { state: { id: match.match_id } })
       }
     >
       <td className="py-3 px-6 flex items-center">
-        <img src={img} alt={hero} className="w-30 h-20 mr-4" />
+        <img src={img} alt={hero} className="w-30 h-20 mr-4 rounded-lg " />
         <div>
           <div className="font-medium">{hero}</div>
           <div className="text-xs text-gray-500">

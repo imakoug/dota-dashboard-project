@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const MatchDetailsItem = ({ player }: any) => {
   const [its, setIts] = useState([]);
   const [img, setImg] = useState<string>("");
+  const [heroname, setHeroname] = useState<string>("");
 
   useEffect(() => {
     const itemNames: any = [];
@@ -17,6 +18,7 @@ const MatchDetailsItem = ({ player }: any) => {
     for (let hero of heroimg) {
       if (hero.id === player.hero_id) {
         setImg(hero.imgpath);
+        setHeroname(hero.localized_name);
       }
     }
     setIts(itemNames);
@@ -24,9 +26,10 @@ const MatchDetailsItem = ({ player }: any) => {
 
   return (
     <tr className="hover:bg-gray-700">
-      <td className="py-2 px-3 text-center">
-        <div className="w-10 h-10 mx-auto">
-          <img className="rounded-md" src={img} alt="Hero" />
+      <td>
+        <div className="py-3 px-6 flex items-center">
+          <img className="w-20 h-15 mr-4 rounded-lg" src={img} alt="Hero image" />
+          <div className="font-medium">{heroname}</div>
         </div>
       </td>
       <td className="py-2 px-3 text-left">
@@ -37,7 +40,9 @@ const MatchDetailsItem = ({ player }: any) => {
       <td className="py-2 px-3 text-center">{player.kills}</td>
       <td className="py-2 px-3 text-center">{player.deaths}</td>
       <td className="py-2 px-3 text-center">{player.assists}</td>
-      <td className="py-2 px-3 text-center">{player.net_worth}</td>
+      <td className="py-2 px-3 text-center text-yellow-400">
+        {player.net_worth}
+      </td>
       <td className="py-2 px-3 text-center">{player.last_hits}</td>
       <td className="py-2 px-3 text-center">{player.denies}</td>
       <td className="py-2 px-3 text-center">{player.gold_per_min}</td>
@@ -51,7 +56,7 @@ const MatchDetailsItem = ({ player }: any) => {
             its.map((it: any, i: number) => (
               <img
                 key={i}
-                className="w-8 h-8 rounded-sm"
+                className="w-12 h-10 rounded-sm"
                 src={it.img}
                 alt="Item"
               />

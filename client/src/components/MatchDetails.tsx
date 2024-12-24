@@ -28,29 +28,34 @@ const MatchDetails = () => {
         <h1 className="text-4xl font-semibold">
           {score[0]} - {score[1]}
         </h1>
-        <h2 className={`${victoryClass} text-xl font-bold mt-2`}> {res ? "RADIANT VICTORY" : "DIRE VICTORY"} </h2>
+        <h2 className={`${victoryClass} text-xl font-bold mt-2`}>
+          {" "}
+          {res ? "RADIANT VICTORY" : "DIRE VICTORY"}{" "}
+        </h2>
       </div>
 
       <div className="mb-8">
-        <h2 className="text-lg font-semibold text-gray-300 mb-4">The Radiant</h2>
+        <h2 className="text-lg font-semibold text-green-300 mb-4">
+          The Radiant
+        </h2>
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto bg-gray-800 shadow-md rounded-lg">
             <thead className="bg-gray-700 text-gray-400 uppercase text-xs">
               <tr>
-                <th className="py-1 px-2 text-left">Hero</th>
-                <th className="py-1 px-2 text-left">Player</th>
-                <th className="py-1 px-2 text-left">K</th>
-                <th className="py-1 px-2 text-left">D</th>
-                <th className="py-1 px-2 text-left">A</th>
-                <th className="py-1 px-2 text-left">Net</th>
-                <th className="py-1 px-2 text-left">LH</th>
-                <th className="py-1 px-2 text-left">DN</th>
-                <th className="py-1 px-2 text-left">GPM</th>
-                <th className="py-1 px-2 text-left">XPM</th>
-                <th className="py-1 px-2 text-left">DMG</th>
-                <th className="py-1 px-2 text-left">HEAL</th>
-                <th className="py-1 px-2 text-left">BLD</th>
-                <th className="py-1 px-2 text-left">Items</th>
+                <th className="py-1 px-2">Hero</th>
+                <th className="py-1 px-2">Player</th>
+                <th className="py-1 px-2">K</th>
+                <th className="py-1 px-2">D</th>
+                <th className="py-1 px-2">A</th>
+                <th className="py-1 px-2">Net</th>
+                <th className="py-1 px-2">LH</th>
+                <th className="py-1 px-2">DN</th>
+                <th className="py-1 px-2">GPM</th>
+                <th className="py-1 px-2">XPM</th>
+                <th className="py-1 px-2">DMG</th>
+                <th className="py-1 px-2">HEAL</th>
+                <th className="py-1 px-2">BLD</th>
+                <th className="py-1 px-2">Items</th>
               </tr>
             </thead>
             <tbody className="text-gray-300 text-sm divide-y divide-gray-700">
@@ -63,25 +68,25 @@ const MatchDetails = () => {
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-gray-300 mb-4">The Dire</h2>
+        <h2 className="text-lg font-semibold text-red-300 mb-4">The Dire</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto bg-gray-800 shadow-md rounded-lg">
             <thead className="bg-gray-700 text-gray-400 uppercase text-xs">
               <tr>
-                <th className="py-1 px-2 text-left">Hero</th>
-                <th className="py-1 px-2 text-left">Player</th>
-                <th className="py-1 px-2 text-left">K</th>
-                <th className="py-1 px-2 text-left">D</th>
-                <th className="py-1 px-2 text-left">A</th>
-                <th className="py-1 px-2 text-left">Net</th>
-                <th className="py-1 px-2 text-left">LH</th>
-                <th className="py-1 px-2 text-left">DN</th>
-                <th className="py-1 px-2 text-left">GPM</th>
-                <th className="py-1 px-2 text-left">XPM</th>
-                <th className="py-1 px-2 text-left">DMG</th>
-                <th className="py-1 px-2 text-left">HEAL</th>
-                <th className="py-1 px-2 text-left">BLD</th>
-                <th className="py-1 px-2 text-left">Items</th>
+                <th className="py-1 px-2">Hero</th>
+                <th className="py-1 px-2">Player</th>
+                <th className="py-1 px-2">K</th>
+                <th className="py-1 px-2">D</th>
+                <th className="py-1 px-2">A</th>
+                <th className="py-1 px-2">Net</th>
+                <th className="py-1 px-2">LH</th>
+                <th className="py-1 px-2">DN</th>
+                <th className="py-1 px-2 ">GPM</th>
+                <th className="py-1 px-2">XPM</th>
+                <th className="py-1 px-2">DMG</th>
+                <th className="py-1 px-2">HEAL</th>
+                <th className="py-1 px-2">BLD</th>
+                <th className="py-1 px-2">Items</th>
               </tr>
             </thead>
             <tbody className="text-gray-300 text-sm divide-y divide-gray-700">

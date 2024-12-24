@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import MatchList from "./MatchList";
 import HeroList from "./HeroList";
 import Register from "./RegisterForm";
-import Profile from "./Profile";
+import ProfileList from "./ProfileList";
 import MatchDetails from "./MatchDetails";
 import { Toaster } from "react-hot-toast";
 
@@ -16,7 +16,7 @@ const Dashboard = () => {
       </div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile></Profile>}></Route>
+        <Route path="/profile" element={<ProfileList></ProfileList>}></Route>
         <Route path="/matches" element={<MatchList></MatchList>}></Route>
         <Route path="/heroes" element={<HeroList></HeroList>}></Route>
         <Route path="/createUser" element={<Register></Register>}></Route>

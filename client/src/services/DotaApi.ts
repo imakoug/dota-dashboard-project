@@ -8,6 +8,7 @@ interface IDotaService {
   getHeroesPlayed?: (uid: string) => Promise<any>;
   getMatch?: (matchId: string) => Promise<any>;
   getDistributions?: () => Promise<any>;
+  getUserInfo?: (steamId: string) => Promise<any>;
 }
 
 const dotaApiService: IDotaService = {};
@@ -16,32 +17,38 @@ dotaApiService.getRecentMatches = (uid: string) => {
   // get 20 matches
   return fetch(`${BASE_URL_PLAYER}/${uid}/recentMatches`)
     .then((res) => res.json())
-    .catch((err) => console.log(err, "smth went wrongg"));
+    .catch((err) => console.log(err, "Something went wrong!"));
 };
 
 dotaApiService.getMatchHistory = (uid: string) => {
   //get 800+ matches
   return fetch(`${BASE_URL_PLAYER}/${uid}/matches`)
     .then((res) => res.json())
-    .catch((err) => console.log(err, "smth went wrongg"));
+    .catch((err) => console.log(err, "Something went wrong!"));
 };
 
 dotaApiService.getHeroesPlayed = (uid: string) => {
   return fetch(`${BASE_URL_PLAYER}/${uid}/heroes`)
     .then((res) => res.json())
-    .catch((err) => console.log(err, "smth went wrongg"));
+    .catch((err) => console.log(err, "Something went wrong!"));
 };
 
 dotaApiService.getMatch = (matchId: string) => {
   return fetch(`${BASE_URL_MATCH}/${matchId}`)
     .then((res) => res.json())
-    .catch((err) => console.log(err, "smth went wrongg"));
+    .catch((err) => console.log(err, "Something went wrong!"));
 };
 
 dotaApiService.getDistributions = () => {
   return fetch(`${BASE_URL}/distributions`)
     .then((res) => res.json())
-    .catch((err) => console.log(err, "smth went wrongg"));
+    .catch((err) => console.log(err, "Something went wrong!"));
+};
+
+dotaApiService.getUserInfo = (steamId: string) => {
+  return fetch(`${BASE_URL_PLAYER}/${steamId}`)
+    .then((res) => res.json())
+    .catch((err) => console.log(err, "Something went wrong!"));
 };
 
 export default dotaApiService;

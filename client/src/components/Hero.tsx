@@ -22,11 +22,11 @@ const Hero = ({ hero }: IHeroProps) => {
 
   return (
     <tr className="border-b border-gray-700 hover:bg-gray-700 transition duration-300">
-      <td className="p-2 flex items-center space-x-2">
+      <td className="p-2 flex items-center">
         <img
           src={img}
           alt={name}
-          className="rounded-lg object-cover"
+          className="rounded-lg object-cover w-30 h-20 mr-4"
         />
         <span className="text-gray-200 font-medium text-base">{name}</span>
       </td>
