@@ -4,7 +4,7 @@ Dota Dashboard is a web app. You can add multiple accounts, analyze games, givin
 
 ## Screenshots
 
-<img src="imgs/ss.png" title="" alt="" data-align="center">
+<img src="imgs/overview.png" title="" alt="" data-align="center">
 
 ## Getting started
 
@@ -16,26 +16,26 @@ cd dota-dashboard-project
 ```
 
 2. Install dependencies
-   
+
    ```
    npm install
    ```
 
 3. Start server
-   
+
    ```
    npm run dev
    ```
 
 4. Go to the client and install dependencies
-   
+
    ```
    cd client
    npm install
    ```
 
 5. Start the client
-   
+
    ```
    npm run dev
    ```
