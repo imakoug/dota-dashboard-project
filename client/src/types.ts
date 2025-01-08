@@ -28,6 +28,7 @@ export interface IMatch {
 }
 
 export interface IProfile {
+  password: string;
   steamId: string;
   username: string;
   __v: number;

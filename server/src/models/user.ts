@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
-  steamId: {type: Number, required: true},
+  password: { type: String, required: true },
+  steamId: { type: String, required: true, unique: true },
 });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model("User", userSchema);

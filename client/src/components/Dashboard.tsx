@@ -4,26 +4,28 @@ import Home from "./Home";
 import MatchList from "./MatchList";
 import HeroList from "./HeroList";
 import Register from "./RegisterForm";
-import ProfileList from "./ProfileList";
+import Profile from "./Profile";
 import MatchDetails from "./MatchDetails";
+import ProtectedRoutes from "./ProtectedRoutes";
+import Login from "./LoginForm";
+import News from "./News";
 import { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
       <div>
-        <Toaster position="bottom-right" reverseOrder={false}></Toaster>
+        <Toaster position="bottom-right" reverseOrder={false} />
       </div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<ProfileList></ProfileList>}></Route>
-        <Route path="/matches" element={<MatchList></MatchList>}></Route>
-        <Route path="/heroes" element={<HeroList></HeroList>}></Route>
-        <Route path="/createUser" element={<Register></Register>}></Route>
-        <Route
-          path="/matches/details"
-          element={<MatchDetails></MatchDetails>}
-        ></Route>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/matches" element={<MatchList />} />
+        <Route path="/heroes" element={<HeroList />} />
+        <Route path="/matches/details" element={<MatchDetails />} />
       </Routes>
     </div>
   );

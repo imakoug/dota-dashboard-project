@@ -1,20 +1,21 @@
 const BASE_URL = "http://localhost:3000";
 
 interface IUserService {
-  create?: (user: IUser) => Promise<any>;
-  getOne?: (steamId: string) => Promise<any>;
-  getAll?: () => Promise<any>;
-  deleteOne?: (steamId: string) => Promise<any>;
+  register?: (user: IUser) => Promise<any>;
+  login?: (username: string, password: string) => Promise<any>;
+  getUser?: (token: string) => Promise<any>;
+  delete?: (user: IUser) => Promise<any>;
 }
 
 export interface IUser {
   username: string;
+  password: string;
   steamId: string;
 }
 
 const userApiService: IUserService = {};
 
-userApiService.create = (user: IUser) => {
+userApiService.register = (user: IUser) => {
   return fetch(`${BASE_URL}/register`, {
     method: "POST",
     credentials: "include",
@@ -26,36 +27,39 @@ userApiService.create = (user: IUser) => {
     .catch((err) => console.log(err));
 };
 
-userApiService.getOne = (steamId: string) => {
-  return fetch(`${BASE_URL}/me`, {
-    method: "GET",
+userApiService.login = (username: string, password: string) => {
+  return fetch(`${BASE_URL}/login`, {
+    method: "POST",
     credentials: "include",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(steamId),
+    body: JSON.stringify({ username, password }),
   })
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
 
-userApiService.getAll = () => {
-  return fetch(`${BASE_URL}/all`, {
+userApiService.getUser = (token: string) => {
+  return fetch(`${BASE_URL}/profile`, {
     method: "GET",
     credentials: "include",
     mode: "cors",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
 
-userApiService.deleteOne = (steamId: string) => {
+userApiService.delete = (user: IUser) => {
   return fetch(`${BASE_URL}/delete`, {
     method: "DELETE",
     credentials: "include",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({steamId}),
+    body: JSON.stringify(user),
   })
     .then((res) => res.json())
     .catch((err) => console.log(err));

@@ -2,22 +2,19 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+
 interface IUser {
   username: string;
-  steamId: string;
   password: string;
-  confirmpass: string;
 }
 
-const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
-  const { onRegister } = useAuth();
+  const { onLogin } = useAuth();
   const [message, setMessage] = useState("ok");
   const [user, setUser] = useState<IUser>({
     username: "",
-    steamId: "",
     password: "",
-    confirmpass: "",
   });
 
   const handleChange = (e: any) => {
@@ -30,40 +27,24 @@ const Register = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const numberRegex = /^\d+$/;
-    if (!numberRegex.test(user.steamId)) {
-      setMessage("SteamId should only include numbers");
-    } else if (user.password != user.confirmpass) {
-      setMessage("Passwords don't match");
+    const res = await onLogin!(user.username, user.password);
+    if (res.message != "Login successful") {
+      setMessage(res.message);
     } else {
-      const res = await onRegister!(user.username, user.password, user.steamId);
-      if (res.message === "User created") {
-        toast.success(`${res.message}`);
-        setUser({
-          username: "",
-          steamId: "",
-          password: "",
-          confirmpass: "",
-        });
-        navigate("/profile");
-      } else {
-        setMessage(`${res.message}`);
-        return;
-      }
+      toast.success(res.message);
+      navigate("/profile");
     }
   };
 
   const validateForm = () => {
-    return (
-      !user.username || !user.steamId || !user.password || !user.confirmpass
-    );
+    return !user.username || !user.password;
   };
 
   return (
     <section className="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center">
       <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold text-white mb-6 text-center">
-          Sign Up
+          Login
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -75,19 +56,6 @@ const Register = () => {
               id="username"
               name="username"
               value={user.username}
-              onChange={handleChange}
-              className="w-full bg-gray-700 text-gray-100 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="steamId" className="block text-gray-300 mb-2">
-              SteamId
-            </label>
-            <input
-              type="text"
-              id="steamId"
-              name="steamId"
-              value={user.steamId}
               onChange={handleChange}
               className="w-full bg-gray-700 text-gray-100 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
@@ -105,19 +73,6 @@ const Register = () => {
               className="w-full bg-gray-700 text-gray-100 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="password" className="block text-gray-300 mb-2">
-              Confirm password
-            </label>
-            <input
-              type="password"
-              id="confirmpass"
-              name="confirmpass"
-              value={user.confirmpass}
-              onChange={handleChange}
-              className="w-full bg-gray-700 text-gray-100 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
           {message !== "ok" && (
             <h1 className="text-red-500 text-sm mb-4">{message}</h1>
           )}
@@ -130,7 +85,7 @@ const Register = () => {
                 : "bg-blue-600 hover:bg-blue-500 transition duration-300"
             }`}
           >
-            Register
+            Login
           </button>
         </form>
       </div>
@@ -138,4 +93,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
