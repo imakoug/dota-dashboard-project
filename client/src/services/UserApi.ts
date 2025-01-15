@@ -2,13 +2,13 @@ const BASE_URL = "http://localhost:3000";
 
 interface IUserService {
   register?: (user: IUser) => Promise<any>;
-  login?: (username: string, password: string) => Promise<any>;
+  login?: (email: string, password: string) => Promise<any>;
   getUser?: (token: string) => Promise<any>;
   delete?: (user: IUser) => Promise<any>;
 }
 
 export interface IUser {
-  username: string;
+  email: string;
   password: string;
   steamId: string;
 }
@@ -27,13 +27,13 @@ userApiService.register = (user: IUser) => {
     .catch((err) => console.log(err));
 };
 
-userApiService.login = (username: string, password: string) => {
+userApiService.login = (email: string, password: string) => {
   return fetch(`${BASE_URL}/login`, {
     method: "POST",
     credentials: "include",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ email, password }),
   })
     .then((res) => res.json())
     .catch((err) => console.log(err));

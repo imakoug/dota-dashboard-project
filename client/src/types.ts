@@ -30,7 +30,7 @@ export interface IMatch {
 export interface IProfile {
   password: string;
   steamId: string;
-  username: string;
+  email: string;
   __v: number;
   _id: string;
 }

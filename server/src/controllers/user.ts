@@ -9,10 +9,10 @@ dotenv.config();
 const SECRET_KEY: string | undefined = process.env.SECRET_KEY;
 
 export const registerUser = async (req: Request, res: Response) => {
-  const { username, password, steamId } = req.body;
+  const { email, password, steamId } = req.body;
 
   try {
-    let existingUser = await User.findOne({ username });
+    let existingUser = await User.findOne({ email });
     if (existingUser) {
       res.status(409).send({ message: "User already exists" });
       return;
@@ -45,9 +45,9 @@ export const registerUser = async (req: Request, res: Response) => {
 };
 
 export const loginUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
       res.status(404).send({ message: "User not found" });
       return;

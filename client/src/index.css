@@ -57,6 +57,7 @@ body::-webkit-scrollbar {
   content: "\f00d";
 }
 
+
 .wrapper ul {
   position: absolute;
   top: 50%;
@@ -105,4 +106,37 @@ body::-webkit-scrollbar {
 
 input[type="checkbox"] {
   display: none;
+}
+
+.wrapper ul li button {
+  color: none;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 500;
+  padding: 5px 30px;
+  color: white;
+  position: relative;
+  line-height: 50px;
+  transition: all 0.3s ease;
+}
+
+.wrapper ul li button:after {
+  position: absolute;
+  content: "";
+  background: rgb(249, 71, 71);
+  width: 100%;
+  height: 50px;
+  left: 0;
+  border-radius: 50px;
+  transform: scaleY(0);
+  z-index: -1;
+  transition: transform 0.3s ease;
+}
+
+.wrapper ul li button:hover:after {
+  transform: scaleY(1);
+}
+
+.wrapper ul li button:hover {
+  color: white;
 }

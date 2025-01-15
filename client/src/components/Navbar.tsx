@@ -1,14 +1,27 @@
 import React, { useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { authState } = useAuth();
+  const { authState, onLogout } = useAuth();
   const checkboxRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const handleLinkClick = () => {
     if (checkboxRef.current) {
       checkboxRef.current.checked = false;
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await onLogout!();
+      toast.success("You have been logged out");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
   };
 
@@ -36,6 +49,21 @@ const Navbar = () => {
                 <Link to="/news" onClick={handleLinkClick}>
                   News
                 </Link>
+              </li>
+              <li>
+                <Link to="/friends" onClick={handleLinkClick}>
+                  Friends
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    handleLinkClick();
+                  }}
+                >
+                  Logout
+                </button>
               </li>
             </>
           ) : (

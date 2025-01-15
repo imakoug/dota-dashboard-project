@@ -10,7 +10,7 @@ interface IAuthProps {
   authState?: IAuthState;
   onLogin?: (username: string, password: string) => Promise<any>;
   onRegister?: (
-    username: string,
+    email: string,
     password: string,
     steamId: string
   ) => Promise<any>;
@@ -38,13 +38,13 @@ export const AuthProvider = ({ children }: any) => {
   }, []);
 
   const register = async (
-    username: string,
+    email: string,
     password: string,
     steamId: string
   ) => {
     try {
       const res = await userApiService.register!({
-        username,
+        email,
         password,
         steamId,
       });
@@ -60,9 +60,9 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     try {
-      const res = await userApiService.login!(username, password);
+      const res = await userApiService.login!(email, password);
       if (res.token) {
         const { token } = res;
         setAuthState({ token, authenticated: true });

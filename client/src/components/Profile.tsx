@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import dotaApiService from "../services/DotaApi";
 import getRankImage from "../utils/rankImages";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
 import { IProfile } from "../types";
 
 const NO_AVATAR_URL =
@@ -18,12 +16,11 @@ const Profile = () => {
   const [user, setUser] = useState<IProfile>({
     password: "",
     steamId: "",
-    username: "",
+    email: "",
     __v: 0,
     _id: "",
   });
-  const { authState, onLogout, onProfile } = useAuth();
-  const navigate = useNavigate();
+  const { authState, onProfile } = useAuth();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -41,15 +38,7 @@ const Profile = () => {
     fetchUserData();
   }, [authState, onProfile]);
 
-  const handleLogout = async () => {
-    try {
-      await onLogout!();
-      toast.success("You have been logged out");
-      navigate("/");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+
 
   return (
     <section className="bg-gray-900 text-gray-100 min-h-screen flex flex-col items-center py-10 px-4">
@@ -82,8 +71,8 @@ const Profile = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <span className="text-gray-400 text-sm">Username</span>
-            <span className="text-lg font-medium">{user.username || "-"}</span>
+            <span className="text-gray-400 text-sm">Email</span>
+            <span className="text-lg font-medium">{user.email || "-"}</span>
           </div>
           <div className="flex flex-col">
             <span className="text-gray-400 text-sm">Steam ID</span>
@@ -92,7 +81,7 @@ const Profile = () => {
             </span>
           </div>
           <div className="flex flex-col sm:col-span-2">
-            <span className="text-gray-400 text-sm">Profile Link</span>
+            <span className="text-gray-400 text-sm">Steam Profile Link</span>
             <a
               href={userData?.profile?.profileurl || "#"}
               target="_blank"
@@ -118,12 +107,6 @@ const Profile = () => {
           >
             Get Matches
           </Link>
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 text-white py-2 px-4 rounded-lg shadow hover:bg-red-500 transition duration-200"
-          >
-            Logout
-          </button>
         </div>
       </div>
     </section>

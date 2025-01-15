@@ -6,6 +6,7 @@ import HeroList from "./HeroList";
 import Register from "./RegisterForm";
 import Profile from "./Profile";
 import MatchDetails from "./MatchDetails";
+import FriendsPage from "./FriendsPage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Login from "./LoginForm";
 import News from "./News";
@@ -26,6 +27,7 @@ const Dashboard = () => {
         <Route path="/matches" element={<MatchList />} />
         <Route path="/heroes" element={<HeroList />} />
         <Route path="/matches/details" element={<MatchDetails />} />
+        <Route path="/friends" element={<FriendsPage />} />
       </Routes>
     </div>
   );
