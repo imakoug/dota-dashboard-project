@@ -1,9 +1,12 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new Schema({
+  steamId: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  steamId: { type: String, required: true, unique: true },
+  friends: [{ type: Schema.Types.String }],
+  pendingRequests: [{ type: Schema.Types.String }],
+  sentRequests: [{ type: Schema.Types.String }],
 });
 
-export default mongoose.model("User", userSchema);
+export const User = model("User", UserSchema);

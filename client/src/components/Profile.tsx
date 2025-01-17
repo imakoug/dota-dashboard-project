@@ -38,8 +38,6 @@ const Profile = () => {
     fetchUserData();
   }, [authState, onProfile]);
 
-
-
   return (
     <section className="bg-gray-900 text-gray-100 min-h-screen flex flex-col items-center py-10 px-4">
       <header className="w-full max-w-4xl flex flex-col items-center space-y-4 mb-10">

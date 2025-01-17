@@ -1,8 +1,10 @@
-import User from "../models/user";
+import { User } from "../models/user";
 import { Request, Response } from "express";
+import { Socket } from "socket.io";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import activeUsers from "..";
 
 dotenv.config();
 
@@ -82,5 +84,152 @@ export const deleteOne = async (req: Request, res: Response) => {
     res.status(200).send({ message: "User deleted" });
   } catch (e) {
     res.status(400).send({ e, message: "Something went wrong" });
+  }
+};
+
+export const sendRequest = async (req: Request, res: Response) => {
+  try {
+    const { steamId, friendSteamId } = req.body;
+
+    if (!steamId || !friendSteamId) {
+      res.status(400).json({ error: "User IDs are required." });
+      return;
+    }
+    if (steamId === friendSteamId) {
+      res.status(400).json({ error: "Cannot add yourself as a friend." });
+      return;
+    }
+    const user = await User.findOne({ steamId: steamId });
+    const friend = await User.findOne({ steamId: friendSteamId });
+
+    if (!user || !friend) {
+      res.status(404).json({ error: "User not found." });
+      return;
+    }
+
+    if (!friend.pendingRequests.includes(steamId)) {
+      friend.pendingRequests.push(steamId);
+    }
+    if (!user.sentRequests.includes(friendSteamId)) {
+      user.sentRequests.push(friendSteamId);
+    }
+
+    await friend.save();
+    await user.save();
+    const friendSocketId = activeUsers[friendSteamId];
+    if (friendSocketId) {
+      const io: Socket = req.app.get("io");
+      io.to(friendSocketId).emit("newFriendRequest", {
+        from: steamId,
+        message: `${user.email} sent you a friend request.`,
+      });
+    }
+
+    res.status(200).json({ message: "Friend request sent." });
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};
+
+export const acceptRequest = async (req: Request, res: Response) => {
+  try {
+    const { steamId, friendSteamId } = req.body;
+
+    if (!steamId || !friendSteamId) {
+      res.status(400).json({ error: "User IDs are required." });
+      return;
+    }
+
+    const user = await User.findOne({ steamId: steamId });
+    const friend = await User.findOne({ steamId: friendSteamId });
+
+    if (!user || !friend) {
+      res.status(404).json({ error: "User not found." });
+      return;
+    }
+
+    if (user.friends.includes(friendSteamId)) {
+      res.status(400).json({ error: "already friends" });
+      return;
+    }
+    if (friend.friends.includes(steamId)) {
+      res.status(400).json({ error: "already friends" });
+      return;
+    }
+
+    user.friends.push(friendSteamId);
+    friend.friends.push(steamId);
+
+    user.pendingRequests = user.pendingRequests.filter(
+      (id) => id !== friendSteamId
+    );
+    friend.sentRequests = friend.sentRequests.filter((id) => id !== steamId);
+
+    await user.save();
+    await friend.save();
+
+    const io: Socket = req.app.get("io");
+    const userSocketId = activeUsers[steamId];
+    const friendSocketId = activeUsers[friendSteamId];
+
+    if (userSocketId) {
+      io.to(userSocketId).emit("friendAdded", {
+        friendId: friendSteamId,
+        email: friend.email,
+      });
+    }
+    if (friendSocketId) {
+      io.to(friendSocketId).emit("friendAdded", {
+        friendId: steamId,
+        email: user.email,
+      });
+    }
+    res.status(200).json({ message: "Friend request accepted." });
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};
+
+export const deleteFriend = async (req: Request, res: Response) => {
+  try {
+    const { steamId, friendSteamId } = req.body;
+    const user = await User.findOne({ steamId: steamId });
+    const friend = await User.findOne({ steamId: friendSteamId });
+
+    if (!user || !friend) {
+      res.status(400).json({ error: "User IDs are required." });
+      return;
+    }
+    if (
+      !user.friends.includes(friendSteamId) ||
+      !friend.friends.includes(steamId)
+    ) {
+      res.status(400).json({ error: "you are not friends" });
+    }
+    user.friends = user.friends.filter((id) => id !== friendSteamId);
+    friend.friends = friend.friends.filter((id) => id !== steamId);
+    await friend.save();
+    await user.save();
+
+    const io: Socket = req.app.get("io");
+    const userSocketId = activeUsers[steamId];
+    const friendSocketId = activeUsers[friendSteamId];
+
+    if (userSocketId) {
+      io.to(userSocketId).emit("friendDeleted", {
+        friendId: friendSteamId,
+        email: friend.email,
+      });
+    }
+    if (friendSocketId) {
+      io.to(friendSocketId).emit("friendDeleted", {
+        friendId: steamId,
+        email: user.email,
+      });
+    }
+
+    res.status(200).json({ message: "friend deleted!" });
+  } catch (err) {
+    res.status(500).json({ error: err, message: "Something went wrong" });
   }
 };
