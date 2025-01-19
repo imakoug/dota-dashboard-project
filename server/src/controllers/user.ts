@@ -107,13 +107,29 @@ export const sendRequest = async (req: Request, res: Response) => {
       return;
     }
 
-    if (!friend.pendingRequests.includes(steamId)) {
-      friend.pendingRequests.push(steamId);
+    if (
+      friend.friends.includes(steamId) ||
+      user.friends.includes(friendSteamId)
+    ) {
+      res.status(400).send({
+        error: "400",
+        message: "you are already friends with this user!",
+      });
+      return;
     }
-    if (!user.sentRequests.includes(friendSteamId)) {
-      user.sentRequests.push(friendSteamId);
+    if (
+      friend.pendingRequests.includes(steamId) ||
+      user.sentRequests.includes(friendSteamId)
+    ) {
+      res.status(400).send({
+        error: "400",
+        message: "you have already sent a friend request to this user",
+      });
+      return;
     }
 
+    friend.pendingRequests.push(steamId);
+    user.sentRequests.push(friendSteamId);
     await friend.save();
     await user.save();
     const friendSocketId = activeUsers[friendSteamId];
@@ -125,7 +141,7 @@ export const sendRequest = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(200).json({ message: "Friend request sent." });
+    res.status(200).json({ message: "Friend request sent.", friendEmail: friend.email });
   } catch (error) {
     res.status(500).json({ error: error });
   }
