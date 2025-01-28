@@ -43,7 +43,9 @@ cd dota-dashboard-project
 ## Built with
 
 - [React](https://react.dev/) - Front end library for web and native user interfaces
-- [MongoDB](https://www.mongodb.com/) - Realtime database and authentication with Facebook
+- [MongoDB](https://www.mongodb.com/) - Realtime database and authentication with JWT tokens
+- [Express.js](https://expressjs.com/) - API 
+- [Socket.io](https://socket.io/) - Library that enables real-time, bidirectional and event-based communication between the browser and the server
 - [OpenDota API](https://docs.opendota.com/) - Provides Dota 2 related data
 
 ## Contributing
