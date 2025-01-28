@@ -12,6 +12,7 @@ const NO_RANK_IMAGE_URL =
 
 const Profile = () => {
   const [rankImg, setRankImg] = useState<string>(NO_RANK_IMAGE_URL);
+  const [wr, setWr] = useState<number>(0);
   const [userData, setUserData] = useState<any>(null);
   const [user, setUser] = useState<IProfile>({
     password: "",
@@ -27,12 +28,14 @@ const Profile = () => {
       try {
         const token = authState?.token;
         const profik = await onProfile!(token as string);
+        const wr = await dotaApiService.getWr!(profik.user.steamId);
+        setWr((wr.win / (wr.lose + wr.win)) * 100);
         setUser(profik.user);
         const res = await dotaApiService.getUserInfo!(profik.user.steamId);
         setUserData(res);
         setRankImg(getRankImage(res.rank_tier));
       } catch (error) {
-        console.error("Failed to fetch user data:", error);
+        return null;
       }
     };
     fetchUserData();
@@ -65,19 +68,20 @@ const Profile = () => {
       </header>
       <div className="w-full max-w-4xl bg-gray-800 p-6 rounded-lg shadow-lg">
         <h2 className="text-xl font-semibold text-gray-200 mb-4">
-          Profile Details
+          Player Details
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="flex flex-col">
             <span className="text-gray-400 text-sm">Email</span>
             <span className="text-lg font-medium">{user.email || "-"}</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-gray-400 text-sm">Dota ID</span>
+            <span className="text-gray-400 text-sm">Winrate</span>
             <span className="text-lg font-medium">
-              {user.steamId || "Not available"}
+              {wr.toFixed(3) + "%" || "Not available"}
             </span>
           </div>
+
           <div className="flex flex-col sm:col-span-2">
             <span className="text-gray-400 text-sm">Steam Profile Link</span>
             <a

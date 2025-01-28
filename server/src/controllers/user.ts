@@ -141,7 +141,9 @@ export const sendRequest = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(200).json({ message: "Friend request sent.", friendEmail: friend.email });
+    res
+      .status(200)
+      .json({ message: "Friend request sent.", friendEmail: friend.email });
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -247,5 +249,14 @@ export const deleteFriend = async (req: Request, res: Response) => {
     res.status(200).json({ message: "friend deleted!" });
   } catch (err) {
     res.status(500).json({ error: err, message: "Something went wrong" });
+  }
+};
+
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
+    res.status(200).send({ users });
+  } catch (e) {
+    res.status(500).json({ error: e, message: "Failed getting users" });
   }
 };

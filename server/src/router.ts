@@ -8,6 +8,7 @@ import {
   sendRequest,
   acceptRequest,
   deleteFriend,
+  getUsers,
 } from "./controllers/user";
 import { authMiddleware } from "./middlewares/auth";
 
@@ -20,6 +21,7 @@ router.get("/profile", authMiddleware, getUser);
 router.post("/login", loginUser);
 router.post("/register", registerUser);
 router.delete("/delete", deleteOne);
+router.get("/users", getUsers);
 
 // friends requests
 

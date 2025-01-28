@@ -85,14 +85,12 @@ export const AuthProvider = ({ children }: any) => {
 
   const getProfile = async (token: string) => {
     if (!token) {
-      console.error("Token is missing for getProfile");
       return null;
     }
     try {
       const res = await userApiService.getUser!(token);
       return res;
     } catch (err) {
-      console.error("Error fetching profile:", err);
       return null;
     }
   };

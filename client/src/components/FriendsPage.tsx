@@ -1,24 +1,49 @@
 import React, { useState, useEffect } from "react";
+import userApiService from "../services/UserApi";
+import SearchItem from "./SearchItem";
 import { io } from "socket.io-client";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import FriendItem from "./FriendItem";
 
+export interface IUser {
+  email: string;
+  friends: string[];
+  password: string;
+  pendingRequests: string[];
+  sentRequests: string[];
+  steamId: string;
+  __v: number;
+  _id: string;
+}
 const socket = io("http://localhost:4000");
 
 function FriendsPage() {
   const { authState, onProfile } = useAuth();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<IUser>({
+    email: "",
+    friends: [],
+    password: "",
+    pendingRequests: [],
+    sentRequests: [],
+    steamId: "",
+    __v: 0,
+    _id: "",
+  });
   const [id, setId] = useState<string>("");
+  const [users, setUsers] = useState<any>(null);
+  const [search, setSearch] = useState<any>(null);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [friendToDelete, setFriendToDelete] = useState<string | null>(null);
 
   const fetchUserData = async () => {
     try {
       const data = await onProfile!(authState!.token as string);
+      const dat = await userApiService.getUsers!();
+      setUsers(dat.users);
       setUser(data.user);
     } catch (error) {
-      console.error("Error fetching profile:", error);
+      return null;
     }
   };
 
@@ -49,29 +74,6 @@ function FriendsPage() {
       setShowDeleteModal(false);
     } catch (err) {
       console.log(err);
-    }
-  };
-
-  const sendFriendRequest = async (friendId: string) => {
-    try {
-      const response = await fetch("http://localhost:3000/friend/request", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          steamId: user.steamId,
-          friendSteamId: friendId,
-        }),
-      }).then((res) => res.json());
-      if (response.error) {
-        toast.error(response.message);
-      } else {
-        toast(`Friend request sent to user with Email: ${response.friendEmail}`);
-      }
-      fetchUserData();
-    } catch (error) {
-      console.error("Error sending friend request:", error);
     }
   };
 
@@ -131,13 +133,16 @@ function FriendsPage() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    sendFriendRequest(id);
     setId("");
   };
 
   const handleChange = (e: any) => {
     const { value } = e.target;
     setId(value);
+    let temp = users.filter(
+      (it: any) => it.steamId.includes(value) && it.steamId !== user.steamId
+    );
+    setSearch(temp);
   };
 
   const validate = () => {
@@ -151,7 +156,7 @@ function FriendsPage() {
         <div className="mb-6">
           <h2 className="text-xl font-bold mb-4">Friends List</h2>
           <ul className="bg-gray-800 p-4 rounded-lg space-y-2">
-            {user &&
+            {user.friends.length ? (
               user.friends.map((friend: any, i: number) => (
                 <div key={i}>
                   <li className="p-2 bg-gray-700 rounded-md flex justify-between items-center">
@@ -164,13 +169,16 @@ function FriendsPage() {
                     </button>
                   </li>
                 </div>
-              ))}
+              ))
+            ) : (
+              <h1>You don't have any friends yet</h1>
+            )}
           </ul>
         </div>
         <div className="mb-6">
           <h2 className="text-xl font-bold mb-4">Pending Friend Requests</h2>
           <ul className="bg-gray-800 p-4 rounded-lg space-y-2">
-            {user &&
+            {user.pendingRequests.length ? (
               user.pendingRequests.map((steamId: any, i: number) => (
                 <li
                   key={i}
@@ -184,26 +192,29 @@ function FriendsPage() {
                     Accept
                   </button>
                 </li>
-              ))}
+              ))
+            ) : (
+              <h1>You don't have any pending requests</h1>
+            )}
           </ul>
         </div>
         <div className="mb-6">
           <h2 className="text-xl font-bold mb-4">Sent requests</h2>
           <ul className="bg-gray-800 p-4 rounded-lg space-y-2">
-            {user &&
+            {user.sentRequests.length ? (
               user.sentRequests.map((req: any, i: number) => (
                 <li key={i} className="p-2 bg-gray-700 rounded-md text-sm">
                   <FriendItem steamId={req}></FriendItem>
                 </li>
-              ))}
+              ))
+            ) : (
+              <h1>You didn't send any friend requests yet</h1>
+            )}
           </ul>
         </div>
         <div className="mb-6">
-          <h2 className="text-xl font-bold mb-4">Add a Friend</h2>
-          <form
-            onSubmit={handleSubmit}
-            className="bg-gray-800 p-4 rounded-lg flex space-x-4"
-          >
+          <h2 className="text-xl font-bold mb-4">Search your friend</h2>
+          <div className="bg-gray-800 p-4 rounded-lg flex space-x-4">
             <input
               type="text"
               name="friendId"
@@ -212,15 +223,19 @@ function FriendsPage() {
               placeholder="Enter user ID"
               className="flex-grow p-2 bg-gray-700 text-white rounded-md"
             />
-            <button
-              type="submit"
-              className={`px-4 py-2  text-white rounded-md transition ${
-                !validate() ? "bg-blue-600" : "cursor-not-allowed bg-gray-600"
-              }`}
-            >
-              Send Request
-            </button>
-          </form>
+          </div>
+          {id &&
+            search &&
+            search.map((it: any, i: number) => (
+              <div className="mt-5" key={i}>
+                <SearchItem
+                  user={it}
+                  fetchUserData={fetchUserData}
+                  setId={setId}
+                  steamId={user.steamId}
+                ></SearchItem>
+              </div>
+            ))}
         </div>
       </div>
       {showDeleteModal && (

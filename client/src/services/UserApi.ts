@@ -5,6 +5,7 @@ interface IUserService {
   login?: (email: string, password: string) => Promise<any>;
   getUser?: (token: string) => Promise<any>;
   delete?: (user: IUser) => Promise<any>;
+  getUsers?: () => Promise<any>;
 }
 
 export interface IUser {
@@ -63,6 +64,12 @@ userApiService.delete = (user: IUser) => {
   })
     .then((res) => res.json())
     .catch((err) => console.log(err));
+};
+
+userApiService.getUsers = () => {
+  return fetch(`${BASE_URL}/users`)
+    .then((res) => res.json())
+    .catch((e) => console.log(e, "Error fetching users"));
 };
 
 export default userApiService;

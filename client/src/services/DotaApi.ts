@@ -9,6 +9,7 @@ interface IDotaService {
   getMatch?: (matchId: string) => Promise<any>;
   getDistributions?: () => Promise<any>;
   getUserInfo?: (steamId: string) => Promise<any>;
+  getWr?: (steamId: string) => Promise<any>;
 }
 
 const dotaApiService: IDotaService = {};
@@ -49,6 +50,12 @@ dotaApiService.getUserInfo = (steamId: string) => {
   return fetch(`${BASE_URL_PLAYER}/${steamId}`)
     .then((res) => res.json())
     .catch((err) => console.log(err, "Something went wrong!"));
+};
+
+dotaApiService.getWr = (steamId: string) => {
+  return fetch(`${BASE_URL_PLAYER}/${steamId}/wl`)
+    .then((res) => res.json())
+    .catch((err) => console.log(err, "Error fetching winrate"));
 };
 
 export default dotaApiService;
