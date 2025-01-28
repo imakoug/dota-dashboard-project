@@ -60,7 +60,7 @@ const Profile = () => {
           {userData?.profile?.personaname || "Unknown User"}
         </h1>
         <h2 className="text-lg text-gray-400">
-          SteamID: {user.steamId || "Not available"}
+          Dota ID: {user.steamId || "Not available"}
         </h2>
       </header>
       <div className="w-full max-w-4xl bg-gray-800 p-6 rounded-lg shadow-lg">
@@ -73,7 +73,7 @@ const Profile = () => {
             <span className="text-lg font-medium">{user.email || "-"}</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-gray-400 text-sm">Steam ID</span>
+            <span className="text-gray-400 text-sm">Dota ID</span>
             <span className="text-lg font-medium">
               {user.steamId || "Not available"}
             </span>

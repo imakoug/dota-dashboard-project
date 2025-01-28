@@ -14,7 +14,7 @@ import { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
   return (
-    <div className="dashboard">
+    <div>
       <div>
         <Toaster position="bottom-right" reverseOrder={false} />
       </div>

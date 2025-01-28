@@ -99,7 +99,7 @@ const Register = () => {
               htmlFor="steamId"
               className="block text-gray-300 text-sm mb-2"
             >
-              SteamId
+              DotaId
             </label>
             <input
               type="text"
@@ -108,7 +108,7 @@ const Register = () => {
               value={user.steamId}
               onChange={handleChange}
               className="w-full bg-gray-700 text-gray-100 text-sm p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Enter your SteamId"
+              aria-label="Enter your DotaId"
             />
           </div>
           <div>
