@@ -44,9 +44,10 @@ cd dota-dashboard-project
 
 - [React](https://react.dev/) - Front end library for web and native user interfaces
 - [MongoDB](https://www.mongodb.com/) - Realtime database and authentication with JWT tokens
-- [Express.js](https://expressjs.com/) - API 
+- [Express.js](https://expressjs.com/) - API
 - [Socket.io](https://socket.io/) - Library that enables real-time, bidirectional and event-based communication between the browser and the server
 - [OpenDota API](https://docs.opendota.com/) - Provides Dota 2 related data
+- [Liquipedia API](https://liquipedia.net/dota2/Liquipedia:Dota2WebApi) - Provides Pro Dota data
 
 ## Contributing
 

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import dotaApiService from "../services/DotaApi";
-import Hero from "./Hero";
+import Hero from "../components/Hero";
 import { useLocation } from "react-router-dom";
 import { IHero } from "../types";
-import BackButton from "./Backbutton";
+import BackButton from "../components/Backbutton";
 
 function HeroList() {
   const [heroes, setHeroes] = useState<IHero[]>([]);

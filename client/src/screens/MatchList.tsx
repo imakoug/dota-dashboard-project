@@ -1,9 +1,9 @@
-import Match from "./Match";
+import Match from "../components/Match";
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import dotaApiService from "../services/DotaApi";
 import { IMatch } from "../types";
-import BackButton from "./Backbutton";
+import BackButton from "../components/Backbutton";
 
 function MatchList() {
   const [matches, setMatches] = useState<IMatch[]>([]);

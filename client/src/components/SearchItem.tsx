@@ -1,12 +1,19 @@
-import React from "react";
-import { IUser } from "./FriendsPage";
+import React, { useState } from "react";
+import { IUser } from "../screens/FriendsPage";
 import toast from "react-hot-toast";
 
 interface ISearchProps {
   user: IUser;
 }
 
-export default function SearchItem({ user, setId, fetchUserData, steamId }: any) {
+export default function SearchItem({
+  user,
+  setId,
+  fetchUserData,
+  steamId,
+}: any) {
+  const [sent, setSent] = useState<boolean>(false);
+
   const sendFriendRequest = async (friendId: string) => {
     try {
       const response = await fetch("http://localhost:3000/friend/request", {
@@ -21,14 +28,14 @@ export default function SearchItem({ user, setId, fetchUserData, steamId }: any)
       }).then((res) => res.json());
       if (response.error) {
         toast.error(response.message);
-        console.log(response)
+        console.log(response);
       } else {
         toast(
           `Friend request sent to user with Email: ${response.friendEmail}`
         );
       }
       fetchUserData();
-      setId("");
+      // setId("");
     } catch (error) {
       console.error("Error sending friend request:", error);
     }
@@ -43,10 +50,14 @@ export default function SearchItem({ user, setId, fetchUserData, steamId }: any)
         <p className="text-sm text-gray-400">{user.email}</p>
       </div>
       <button
-        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
-        onClick={() => sendFriendRequest(user.steamId)}
+        className={`px-4 py-2 bg-blue-600 ${!sent && "hover:bg-blue-700"} text-white rounded-md`}
+        disabled={sent}
+        onClick={() => {
+          sendFriendRequest(user.steamId);
+          setSent(true);
+        }}
       >
-        Add Friend
+        {sent ? "Request sent" : "Add Friend"}
       </button>
     </div>
   );

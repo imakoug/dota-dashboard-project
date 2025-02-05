@@ -1,8 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import dotaApiService from "../services/DotaApi";
-import MatchDetailsItem from "./MatchDetailsItem";
-import BackButton from "./Backbutton";
+import MatchDetailsItem from "../components/MatchDetailsItem";
+import BackButton from "../components/Backbutton";
 
 const MatchDetails = () => {
   const [details, setDetails] = useState<any[]>([]);

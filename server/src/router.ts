@@ -10,6 +10,7 @@ import {
   deleteFriend,
   getUsers,
 } from "./controllers/user";
+import { getPatchNotes, getActiveTeams } from "./controllers/liqui";
 import { authMiddleware } from "./middlewares/auth";
 
 const router = express.Router();
@@ -28,5 +29,8 @@ router.get("/users", getUsers);
 router.post("/friend/request", sendRequest);
 router.post("/friend/accept", acceptRequest);
 router.delete("/friend/delete", deleteFriend);
+
+router.get("/liqui/patchnotes", getPatchNotes);
+router.get("/liqui/activeteams", getActiveTeams);
 
 export default router;
