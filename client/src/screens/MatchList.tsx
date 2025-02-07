@@ -1,6 +1,6 @@
 import Match from "../components/Match";
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import dotaApiService from "../services/DotaApi";
 import { IMatch } from "../types";
 import BackButton from "../components/Backbutton";
@@ -9,7 +9,6 @@ function MatchList() {
   const [matches, setMatches] = useState<IMatch[]>([]);
   const location = useLocation();
   const user = location.state?.user;
-  const navigate = useNavigate();
 
   useEffect(() => {
     const steamId = user.steamId;

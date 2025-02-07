@@ -10,7 +10,7 @@ import {
   deleteFriend,
   getUsers,
 } from "./controllers/user";
-import { getPatchNotes, getActiveTeams } from "./controllers/liqui";
+import { getPatchNotes, getActiveTeams, getTeamPlayers } from "./controllers/liqui";
 import { authMiddleware } from "./middlewares/auth";
 
 const router = express.Router();
@@ -32,5 +32,6 @@ router.delete("/friend/delete", deleteFriend);
 
 router.get("/liqui/patchnotes", getPatchNotes);
 router.get("/liqui/activeteams", getActiveTeams);
+router.get("/liqui/teamplayers/:teampagename", getTeamPlayers);
 
 export default router;

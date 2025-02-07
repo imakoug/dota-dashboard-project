@@ -13,7 +13,7 @@ import Updates from "../screens/Updates";
 import { Toaster } from "react-hot-toast";
 import Teams from "../screens/Teams";
 import Tournaments from "../screens/Tournaments";
-import Navbar from "./Navbar";
+import TeamDetails from "../screens/TeamDetails";
 
 const Dashboard = () => {
   return (
@@ -31,9 +31,10 @@ const Dashboard = () => {
         <Route path="/heroes" element={<HeroList />} />
         <Route path="/matches/details" element={<MatchDetails />} />
         <Route path="/friends" element={<FriendsPage />} />
-        <Route path="/updates" element={<Updates />} />
-        <Route path="/tournaments" element={<Tournaments />} />
-        <Route path="/teams" element={<Teams />} />
+        <Route path="/news/updates" element={<Updates />} />
+        <Route path="/news/tournaments" element={<Tournaments />} />
+        <Route path="/news/teams" element={<Teams />} />
+        <Route path="/news/teams/:teampagename" element={<TeamDetails />} />
       </Routes>
     </div>
   );

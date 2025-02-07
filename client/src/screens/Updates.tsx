@@ -23,8 +23,8 @@ function Updates() {
       <table className="min-w-full bg-gray-800 shadow-md rounded-lg overflow-hidden">
         <thead>
           <tr className="bg-gray-700 text-gray-300 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Date</th>
-            <th className="py-3 px-6 text-left">Highlights</th>
+            <th className="py-3 px-6">Date</th>
+            <th className="py-3 px-6">Highlights</th>
           </tr>
         </thead>
         <tbody className="text-gray-300 text-sm font-light">
